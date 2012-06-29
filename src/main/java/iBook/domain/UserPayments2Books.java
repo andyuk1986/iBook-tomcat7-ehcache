@@ -13,7 +13,7 @@ import org.hibernate.annotations.Cache;
 @Entity
 @Table(name = "userPayments2books")
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "entity")
 public class UserPayments2Books implements Serializable {
 	private int id;
 	private UserPayments transactionId;

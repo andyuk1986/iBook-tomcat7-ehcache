@@ -37,7 +37,7 @@ import org.hibernate.annotations.Cache;
         }
 )
 @Table(name="users")
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "entity")
 public class User implements Serializable {
 	private int id;
 	private String userName;
@@ -95,7 +95,7 @@ public class User implements Serializable {
 	}
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "entity")
     public Set<WishBook> getUserWishList() {
         return userWishList;
     }

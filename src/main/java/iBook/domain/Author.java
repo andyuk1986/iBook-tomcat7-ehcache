@@ -20,7 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Cacheable
 @Table(name = "authors")
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "entity")
 public class Author implements Serializable {
 	private int id;
 	private String authorName;
@@ -45,7 +45,7 @@ public class Author implements Serializable {
 	}
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "author")
-    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "entity")
     public Set<Authors2Books> getAuthors2Books() {
 		return authors2Books;
 	}

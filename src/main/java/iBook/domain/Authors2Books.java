@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Entity
 @Cacheable
 @Table(name = "authors2Books")
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "entity")
 public class Authors2Books implements Serializable {
     private int id;
     private Author author;

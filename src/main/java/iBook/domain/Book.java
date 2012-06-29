@@ -51,7 +51,7 @@ import org.hibernate.annotations.GenericGenerator;
                 )
         })
 @Table(name = "books")
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "entity")
 public class Book implements Serializable {
     private int id;
     private Category category;
@@ -96,7 +96,7 @@ public class Book implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
-    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "entity")
     public Set<Authors2Books> getAuthor() {
         return author;
     }
@@ -151,7 +151,7 @@ public class Book implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "entity")
     public Set<UserPayments2Books> getUserBooks() {
         return userBooks;
     }
@@ -161,7 +161,7 @@ public class Book implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "entity")
     public Set<WishBook> getWishListBooks() {
         return wishListBooks;
     }

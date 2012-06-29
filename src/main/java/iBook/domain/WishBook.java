@@ -21,11 +21,11 @@ import java.io.Serializable;
                 @NamedQuery(
                         name = "listWishList",
                         query = "from WishBook as wb",
-                        hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true")
+                        hints = { @QueryHint(name = "org.hibernate.cacheable", value = "true"),
                         }
                 )
         })
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "entity")
 public class WishBook implements Serializable {
     private int id;
     private User user;

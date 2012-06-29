@@ -14,7 +14,7 @@ import org.hibernate.annotations.CascadeType;
 @Entity
 @Table(name = "user_payments")
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "entity")
 public class UserPayments implements Serializable {
 	private int transaction_id;
 	private User user;
@@ -45,7 +45,7 @@ public class UserPayments implements Serializable {
 	}
 	
 	@OneToMany(fetch = FetchType.EAGER)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "entity")
     @Cascade({CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name="transaction_id")
 	public Set<UserPayments2Books> getUserPayments2Books() {

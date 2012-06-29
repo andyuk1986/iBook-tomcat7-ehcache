@@ -75,8 +75,6 @@ public class BookWishListBean implements Serializable, BookWishList {
     @Remove
     public void finishWishList() {
         for(WishBook book : wishList) {
-            System.out.println(book.getUser() + " " + book.getUser().getId());
-
             WishBookDao wishBookBean = DaoFactory.getInstance().getWishBookDao();
             wishBookBean.saveWishBook(book);
         }

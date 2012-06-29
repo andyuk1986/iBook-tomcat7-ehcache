@@ -21,7 +21,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
                 resultClass = Category.class)
 )
 @Table(name = "categories")
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "entity")
 public class Category implements Serializable {
 	private int id;
 	private String categoryName;
@@ -47,7 +47,7 @@ public class Category implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
-    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "entity")
     public Set<Book> getBooks() {
 		return books;
 	}
