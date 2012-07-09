@@ -11,14 +11,46 @@
             memoryStoreEvictionPolicy="LRU"
             />
 
-    <cache name="entity"
+    <cacheManagerPeerProviderFactory
+            class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"
+            properties="connect=UDP(bind_addr=127.0.0.1;mcast_addr=231.12.21.132;mcast_port=45566;loopback=true):PING:
+MERGE2:FD_SOCK:VERIFY_SUSPECT:pbcast.NAKACK:UNICAST:pbcast.STABLE:FRAG:pbcast.GMS"
+            propertySeparator="::"
+            />
+                                     <!--properties="connect=TCP(bind_addr=127.0.0.1;bind_port=7800;port_range=30;loopback=true):MPING(bind_addr=127.0.0.1;break_on_coord_rsp=true;mcast_addr=228.6.7.8;mcast_port=46655;ip_ttl=2;num_initial_members=3):
+MERGE2(min_interval=10000;max_interval=30000):
+FD_SOCK:VERIFY_SUSPECT(timeout=1500):BARRIER:
+pbcast.NAKACK(use_mcast_xmit=false;exponential_backoff=500;retransmit_timeout=300,600,1200,2400,4800;discard_delivered_msgs=true):
+UNICAST(timeout=300,600,1200):
+pbcast.STABLE(desired_avg_gossip=20000;stability_delay=500):
+pbcast.GMS(join_timeout=5000;print_local_addr=true;view_bundling=true):
+UFC(max_credits=2M;min_threshold=0.4):
+MFC(max_credits=2M;min_threshold=0.4):
+FRAG2(frag_size=60K):
+pbcast.STATE_TRANSFER" propertySeparator="::"/>-->
+    <cache
+            name="test"
             maxEntriesLocalHeap="10000"
             eternal="false"
-            timeToIdleSeconds="3600"
-            timeToLiveSeconds="43200"
-            overflowToDisk="false"
-            memoryStoreEvictionPolicy="LRU"
-            />
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+                properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true, replicateUpdatesViaCopy=false, replicateRemovals=true" />
+    </cache>
+
+    <cache name="entity"
+           maxEntriesLocalHeap="10000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="43200"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LRU">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+                properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true, replicateUpdatesViaCopy=false, replicateRemovals=true" />
+    </cache>
 
     <cache name="sfsb"
            maxEntriesLocalHeap="10000"
@@ -36,14 +68,20 @@
             timeToIdleSeconds="3600"
             timeToLiveSeconds="43200"
             overflowToDisk="false"
-            memoryStoreEvictionPolicy="LRU"
-            />
+            memoryStoreEvictionPolicy="LRU">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+                properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true, replicateUpdatesViaCopy=false, replicateRemovals=true" />
+    </cache>
 
     <cache
             name="org.hibernate.cache.spi.UpdateTimestampsCache"
             maxEntriesLocalHeap="5000"
             eternal="true"
             overflowToDisk="false"
-            memoryStoreEvictionPolicy="LRU"
-            />
+            memoryStoreEvictionPolicy="LRU">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+                properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true, replicateUpdatesViaCopy=false, replicateRemovals=true" />
+    </cache>
 </ehcache>
